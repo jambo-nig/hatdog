@@ -1,0 +1,909 @@
+#include <iostream> // Input/Output
+#include <vector> // Vector
+#include <unordered_map> // Call functions easily
+#include <conio.h> // Clear screen and Pause Screen
+#include <cctype> // For isdigit
+#include <algorithm> // For any_of
+#include <iomanip> // For setw()
+#include <cstdlib> // for cls()
+#include <algorithm> // for std::swap
+#include <string> // for std::stof
+#include <queue> // for queue<int>
+
+using namespace std;
+
+/*
+Modules
+
+I. Main
+    A. Process Management
+        i. Create
+        ii. Edit
+        iii. Delete
+        iv. View All
+    B. Algorithm Testing
+        i. First Come First Serve
+        ii. Shortest Job First
+        iii. Shortest Remaining Time First
+        iv. Priority
+        v. Round Robin
+
+II. Miscellaneous
+    A. Functions
+        i. Clear
+        ii. Terminate
+        iii. Print Array
+        iv. Clone Array
+        v. Input Checker
+        vi. Credits
+        vii. Unordered Maps
+*/
+
+void main_menu(), process_menu(), algorithm_menu();
+void pcreate(), pedit(), pdelete(), pview();
+void afirst_come(), ashort_job(), ashort_time(), apriority(), around_robin();
+void terminate(), print(const vector<vector<string>>& list), clone(), reset(), unordered_maps(), name_check(string name), check(string num), no_values();
+void credits();
+
+vector<vector<string>> Process_List, Temporary;
+
+unordered_map<char, void(*)()> MMenu, PMenu, AMenu;
+
+char choice, trace;
+string num;
+
+int main() {
+    unordered_maps();
+
+    main_menu();
+
+    return 0;
+}
+
+
+
+void credits() {
+    std::cout << "\033[31mS\033[33mu\033[32mb\033[36mo\033[34m \033[35mm\033[31mo\033[33m \033[32mt\033[36mo\033[34m \033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\033[36mA\033[34mH\033[35mA\033[31mH\033[33mA\033[32mH\n";
+    _getch();
+    system("cls");
+    PMenu['X']();
+}
+
+// Completed Functions
+// Menus
+void main_menu() {
+    while (true) {
+        std::cout << "------------------------------" << std::endl
+            << "Welcome to Scheduler Simulator!" << std::endl
+            << "------------------------------" << std::endl
+            << "A. Process Management" << std::endl
+            << "B. Algorithm Testing" << std::endl
+            << "C. Credits" << std::endl
+            << "X. Exit Program" << std::endl
+            << "------------------------------" << std::endl;
+
+        std::cin >> choice;
+        choice = toupper(choice);
+
+        if (MMenu.find(choice) != MMenu.end()) {
+            system("cls");
+            MMenu[choice]();
+        }
+        else {
+            std::cout << "Please Select a Valid Option." << std::endl;
+            _getch();
+            system("cls");
+        }
+    }
+}
+void process_menu() {
+    while (true) {
+        std::cout << "------------------------------" << std::endl
+            << "Process Management" << std::endl
+            << "------------------------------" << std::endl
+            << "A. Create" << std::endl
+            << "B. Edit" << std::endl
+            << "C. Delete" << std::endl
+            << "D. View All" << std::endl
+            << "X. Return" << std::endl
+            << "------------------------------" << std::endl;
+
+        std::cin >> choice;
+        choice = toupper(choice);
+
+        if (PMenu.find(choice) != PMenu.end()) {
+            system("cls");
+            PMenu[choice]();
+        }
+        else {
+            std::cout << "Please Select a Valid Option." << std::endl;
+            _getch();
+            system("cls");
+        }
+    }
+}
+void algorithm_menu() {
+    no_values();
+
+    while (true) {
+        std::cout << "------------------------------" << std::endl
+            << "Algorithm Testing" << std::endl
+            << "------------------------------" << std::endl
+            << "A. First Come First Serve" << std::endl
+            << "B. Shortest Job First" << std::endl
+            << "C. Shortest Remaining Time First" << std::endl
+            << "D. Priority" << std::endl
+            << "E. Round Robin" << std::endl
+            << "X. Return" << std::endl
+            << "------------------------------" << std::endl;
+
+        std::cin >> choice;
+        choice = toupper(choice);
+
+        if (AMenu.find(choice) != AMenu.end()) {
+            system("cls");
+            AMenu[choice]();
+        }
+        else {
+            std::cout << "Please Select a Valid Option." << std::endl;
+            _getch();
+            system("cls");
+        }
+    }
+}
+
+// Processes
+void pcreate() {
+    string name, burst, arrival, priority;
+
+    std::cout << "------------------------------" << std::endl
+        << "Create a Process" << std::endl
+        << "------------------------------" << std::endl;
+
+    std::cout << "Enter Process Name: ";
+    std::cin >> name;
+    name_check(name);
+    std::cout << "Enter Burst Time: ";
+    std::cin >> burst;
+    check(burst);
+    std::cout << "Enter Arrival Time: ";
+    std::cin >> arrival;
+    check(arrival);
+    std::cout << "Enter Priority Level: ";
+    std::cin >> priority;
+    check(priority);
+
+
+
+    Process_List.push_back({ name, burst, arrival, priority });
+
+    std::cout << "------------------------------" << std::endl
+        << "Process \"" << name << "\" has been saved." << std::endl;
+
+    _getch();
+    system("cls");
+    MMenu['A']();
+}
+void pedit() {
+    no_values();
+
+    string name, burst, arrival, priority;
+    char confirm;
+
+    std::cout << "------------------------------" << std::endl
+        << "Edit a Process" << std::endl
+        << "------------------------------" << std::endl;
+
+    std::cout << "Please enter process name to edit: ";
+    std::cin >> name;
+
+    auto duplicate = find_if(Process_List.begin(), Process_List.end(), [&name](vector<string>& process) {
+        return process[0] == name;
+        });
+
+    if (duplicate != Process_List.end()) {
+        std::cout << "Confirm Edit? (Y/N) " << std::endl;
+        std::cin >> confirm;
+        confirm = toupper(confirm);
+
+        if (confirm == 'Y') {
+            std::cout << "Enter New Burst Time: ";
+            std::cin >> burst;
+            check(burst);
+
+            std::cout << "Enter New Arrival Time: ";
+            std::cin >> arrival;
+            check(arrival);
+
+            std::cout << "Enter New Priority Level: ";
+            std::cin >> priority;
+            check(priority);
+
+            // Replace values
+            (*duplicate)[1] = burst;
+            (*duplicate)[2] = arrival;
+            (*duplicate)[3] = priority;
+
+            std::cout << "Process \"" << name << "\" has been updated." << std::endl;
+            _getch();
+            system("cls");
+            MMenu['A']();
+        }
+        else {
+            _getch();
+            system("cls");
+            MMenu['A']();
+        }
+    }
+    else {
+        std::cout << "Process not found!" << std::endl;
+        _getch();
+        system("cls");
+        MMenu['A']();
+    }
+
+    _getch();
+    system("cls");
+    PMenu['B']();
+}
+void pdelete() {
+    no_values();
+
+    string name;
+    char confirm;
+
+    while (true) {
+        std::cout << "------------------------------" << std::endl
+            << "Delete Processes" << std::endl
+            << "------------------------------" << std::endl
+            << "A. Delete One" << std::endl
+            << "B. Delete All" << std::endl
+            << "X. Return" << std::endl
+            << "------------------------------" << std::endl;
+        std::cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice) {
+        case 'A': {
+            std::cout << "Please enter process name to delete: ";
+            std::cin >> name;
+
+            auto duplicate = find_if(Process_List.begin(), Process_List.end(), [&name](const vector<string>& process) {
+                return process[0] == name;
+                });
+
+            if (duplicate != Process_List.end()) {
+                std::cout << "Confirm Delete? (Y/N) " << std::endl;
+                std::cin >> confirm;
+                confirm = toupper(confirm);
+                if (confirm == 'Y') {
+                    Process_List.erase(duplicate);
+                    std::cout << "Process \"" << name << "\" has been deleted." << std::endl;
+                }
+            }
+
+            _getch();
+            system("cls");
+            PMenu['C']();
+            break;
+        }
+        case 'B': {
+            std::cout << "Confirm to delete all data? (Y/N)" << std::endl;
+            std::cin >> confirm;
+            confirm = toupper(confirm);
+            if (confirm == 'Y') {
+                Process_List.clear();
+                std::cout << "All data has been deleted." << std::endl;
+            }
+            _getch();
+            system("cls");
+            MMenu['A']();
+            break;
+        }
+        case 'X':
+            system("cls");
+            MMenu['A']();
+            return;
+        default:
+            std::cout << "Please Select a Valid Option." << std::endl;
+            _getch();
+            system("cls");
+            break;
+        }
+    }
+}
+void pview() {
+    no_values();
+
+    std::cout << "------------------------------------------------------------" << std::endl
+        << "View all Processes" << std::endl
+        << "------------------------------------------------------------" << std::endl;
+
+    print(Process_List);
+
+    std::cout << "------------------------------------------------------------" << std::endl;
+
+    _getch();
+    system("cls");
+    MMenu['A']();
+}
+
+// Algorithms
+void afirst_come() {
+    clone();
+
+    std::cout << "Original Process List:\n";
+    print(Process_List);
+
+    // Sorting processes by arrival time
+    sort(Temporary.begin(), Temporary.end(), [](const vector<string>& a, const vector<string>& b) {
+        return stof(a[2]) < stof(b[2]);
+        });
+
+    vector<int> burst_times(Temporary.size());
+    vector<int> waiting_time(Temporary.size(), 0);
+    vector<int> turnaround_time(Temporary.size(), 0);
+    vector<int> completion_time(Temporary.size(), 0);
+
+    int time = 0;
+
+    // Extract burst times from Temporary
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        burst_times[i] = stoi(Temporary[i][1]);
+    }
+
+    // Calculating times
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        if (time < stof(Temporary[i][2])) {
+            time = stof(Temporary[i][2]);
+        }
+        completion_time[i] = time + burst_times[i];
+        turnaround_time[i] = completion_time[i] - stoi(Temporary[i][2]);
+        waiting_time[i] = turnaround_time[i] - burst_times[i];
+        time = completion_time[i];
+    }
+
+    // Display Gantt Chart
+    std::cout << "\nGantt Chart:\n";
+    std::cout << " ";
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n|";
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        std::cout << " P" << Temporary[i][0] << "  |";
+    }
+    std::cout << "\n ";
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n";
+
+    // Align time values
+    std::cout << std::setw(2) << "0";
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        std::cout << std::setw(7) << completion_time[i];
+    }
+    std::cout << "\n";
+
+    // Display table
+    std::cout << "\nProcess Table:\n";
+    std::cout << "Process | Arrival | Burst | Waiting | Turnaround \n";
+    std::cout << "-------------------------------------------------\n";
+    float total_waiting = 0, total_turnaround = 0;
+
+    for (size_t i = 0; i < Temporary.size(); i++) {
+        std::cout << Temporary[i][0] << "\t" << Temporary[i][2] << "\t" << burst_times[i] << "\t"
+            << waiting_time[i] << "\t" << turnaround_time[i] << "\t" << completion_time[i] << "\n";
+        total_waiting += waiting_time[i];
+        total_turnaround += turnaround_time[i];
+    }
+
+    std::cout << "\nTotal Waiting Time: " << total_waiting;
+    std::cout << "\nAverage Waiting Time: " << total_waiting / Temporary.size();
+    std::cout << "\nTotal Turnaround Time: " << total_turnaround;
+    std::cout << "\nAverage Turnaround Time: " << total_turnaround / Temporary.size();
+
+    _getch();
+    std::system("cls");
+    reset();
+    MMenu['B']();
+}
+void ashort_job() {
+    clone();
+
+    std::cout << "Original Process List:\n";
+    print(Process_List);
+
+    // Sorting processes by arrival time, then by burst time
+    sort(Temporary.begin(), Temporary.end(), [](const vector<string>& a, const vector<string>& b) {
+        return stof(a[2]) != stof(b[2]) ? stof(a[2]) < stof(b[2]) : stoi(a[1]) < stoi(b[1]);
+        });
+
+    int n = Temporary.size();
+    vector<int> burst_times(n);
+    vector<int> waiting_time(n, 0);
+    vector<int> turnaround_time(n, 0);
+    vector<int> completion_time(n, 0);
+    vector<int> gantt_chart;
+    vector<int> gantt_process;
+
+    for (size_t i = 0; i < n; i++) {
+        burst_times[i] = stoi(Temporary[i][1]); // Burst time is at index 1
+    }
+
+    int complete = 0, time = 0;
+    vector<bool> is_completed(n, false);
+    while (complete != n) {
+        int shortest = -1;
+        for (size_t i = 0; i < n; i++) {
+            if (!is_completed[i] && stof(Temporary[i][2]) <= time) {
+                if (shortest == -1 || burst_times[i] < burst_times[shortest]) {
+                    shortest = i;
+                }
+            }
+        }
+
+        if (shortest == -1) {
+            time++;
+            continue;
+        }
+
+        gantt_chart.push_back(time);
+        gantt_process.push_back(shortest);
+        time += burst_times[shortest];
+        completion_time[shortest] = time;
+        turnaround_time[shortest] = completion_time[shortest] - stoi(Temporary[shortest][2]);
+        waiting_time[shortest] = turnaround_time[shortest] - burst_times[shortest];
+        is_completed[shortest] = true;
+        complete++;
+    }
+    gantt_chart.push_back(time);
+
+    // Display Gantt Chart
+    std::cout << "\nGantt Chart:\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n|";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << " P" << Temporary[gantt_process[i]][0] << "  |";
+    }
+    std::cout << "\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n";
+
+    // Align time values
+    std::cout << std::setw(3) << "0";
+    for (size_t i = 0; i < gantt_chart.size(); i++) {
+        std::cout << std::setw(7) << gantt_chart[i];
+    }
+    std::cout << "\n";
+
+    // Display table
+    std::cout << "\nProcess Table:\n";
+    std::cout << "Process | Arrival | Burst | Waiting | Turnaround | Completion\n";
+    std::cout << "------------------------------------------------------------\n";
+    float total_waiting = 0, total_turnaround = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        std::cout << Temporary[i][0] << "\t" << Temporary[i][2] << "\t" << burst_times[i] << "\t"
+            << waiting_time[i] << "\t" << turnaround_time[i] << "\t" << completion_time[i] << "\n";
+        total_waiting += waiting_time[i];
+        total_turnaround += turnaround_time[i];
+    }
+
+    std::cout << "\nTotal Waiting Time: " << total_waiting;
+    std::cout << "\nAverage Waiting Time: " << total_waiting / n;
+    std::cout << "\nTotal Turnaround Time: " << total_turnaround;
+    std::cout << "\nAverage Turnaround Time: " << total_turnaround / n;
+
+    _getch();
+    std::system("cls");
+    reset();
+    MMenu['B']();
+}
+void ashort_time() {
+    clone();
+
+    std::cout << "Original Process List:\n";
+    print(Process_List);
+
+    // Sorting processes by arrival time, then by burst time
+    sort(Temporary.begin(), Temporary.end(), [](const vector<string>& a, const vector<string>& b) {
+        return stof(a[2]) != stof(b[2]) ? stof(a[2]) < stof(b[2]) : stoi(a[1]) < stoi(b[1]);
+        });
+
+    int n = Temporary.size();
+    vector<int> burst_times(n);
+    vector<int> remaining_time(n);
+    vector<int> waiting_time(n, 0);
+    vector<int> turnaround_time(n, 0);
+    vector<int> completion_time(n, 0);
+    vector<int> gantt_chart;
+    vector<int> gantt_process;
+
+    for (size_t i = 0; i < n; i++) {
+        burst_times[i] = stoi(Temporary[i][1]); // Burst time is at index 1
+        remaining_time[i] = burst_times[i];
+    }
+
+    int complete = 0, time = 0, last_executed = -1;
+    while (complete != n) {
+        int shortest = -1;
+        for (size_t i = 0; i < n; i++) {
+            if (stof(Temporary[i][2]) <= time && remaining_time[i] > 0) {
+                if (shortest == -1 || remaining_time[i] < remaining_time[shortest]) {
+                    shortest = i;
+                }
+            }
+        }
+
+        if (shortest == -1) {
+            time++;
+            continue;
+        }
+
+        // If a new process is executed, update the Gantt chart
+        if (last_executed != shortest) {
+            gantt_chart.push_back(time);
+            gantt_process.push_back(shortest);
+            last_executed = shortest;
+        }
+
+        // Execute the current process for one time unit
+        remaining_time[shortest]--;
+
+        // Check if the process is completed
+        if (remaining_time[shortest] == 0) {
+            complete++;
+            completion_time[shortest] = time + 1;
+            turnaround_time[shortest] = completion_time[shortest] - stoi(Temporary[shortest][2]);
+            waiting_time[shortest] = turnaround_time[shortest] - burst_times[shortest];
+        }
+        time++;
+    }
+    gantt_chart.push_back(time);
+
+    // Display Gantt Chart
+    std::cout << "\nGantt Chart:\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n|";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << " P" << Temporary[gantt_process[i]][0] << "  |";
+    }
+    std::cout << "\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n";
+
+    // Align time values
+    for (size_t i = 0; i < gantt_chart.size(); i++) {
+        std::cout << std::setw(7) << gantt_chart[i];
+    }
+    std::cout << "\n";
+
+    // Display table
+    std::cout << "\nProcess Table:\n";
+    std::cout << "Process | Arrival | Burst | Waiting | Turnaround | Completion\n";
+    std::cout << "------------------------------------------------------------\n";
+    float total_waiting = 0, total_turnaround = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        std::cout << Temporary[i][0] << "\t" << Temporary[i][2] << "\t" << burst_times[i] << "\t"
+            << waiting_time[i] << "\t" << turnaround_time[i] << "\t" << completion_time[i] << "\n";
+        total_waiting += waiting_time[i];
+        total_turnaround += turnaround_time[i];
+    }
+
+    std::cout << "\nTotal Waiting Time: " << total_waiting;
+    std::cout << "\nAverage Waiting Time: " << total_waiting / n;
+    std::cout << "\nTotal Turnaround Time: " << total_turnaround;
+    std::cout << "\nAverage Turnaround Time: " << total_turnaround / n;
+
+    _getch();
+    std::system("cls");
+    reset();
+    MMenu['B']();
+}
+void apriority() {
+    clone();
+
+    std::cout << "Original Process List:\n";
+    print(Process_List);
+
+    // Sorting processes by arrival time, then by priority
+    sort(Temporary.begin(), Temporary.end(), [](const vector<string>& a, const vector<string>& b) {
+        return stoi(a[3]) != stoi(b[3]) ? stoi(a[3]) < stoi(b[3]) : stof(a[2]) < stof(b[2]);
+        });
+
+    int n = Temporary.size();
+    vector<int> burst_times(n);
+    vector<int> waiting_time(n, 0);
+    vector<int> turnaround_time(n, 0);
+    vector<int> completion_time(n, 0);
+    vector<int> gantt_chart;
+    vector<int> gantt_process;
+    vector<int> priority(n);
+
+    for (size_t i = 0; i < n; i++) {
+        burst_times[i] = stoi(Temporary[i][1]); // Burst time is at index 1
+        priority[i] = stoi(Temporary[i][3]); // Priority is at index 3
+    }
+
+    int complete = 0, time = 0;
+    vector<bool> is_completed(n, false);
+    while (complete != n) {
+        int highest_priority = -1;
+        for (size_t i = 0; i < n; i++) {
+            if (!is_completed[i] && stof(Temporary[i][2]) <= time) {
+                if (highest_priority == -1 || priority[i] < priority[highest_priority]) {
+                    highest_priority = i;
+                }
+            }
+        }
+
+        if (highest_priority == -1) {
+            time++;
+            // Apply aging: reduce priority of waiting processes (min value 0)
+            for (size_t i = 0; i < n; i++) {
+                if (!is_completed[i] && stof(Temporary[i][2]) <= time) {
+                    priority[i] = std::max(0, priority[i] - 1);
+                }
+            }
+            continue;
+        }
+
+        gantt_chart.push_back(time);
+        gantt_process.push_back(highest_priority);
+        time += burst_times[highest_priority];
+        completion_time[highest_priority] = time;
+        turnaround_time[highest_priority] = completion_time[highest_priority] - stoi(Temporary[highest_priority][2]);
+        waiting_time[highest_priority] = turnaround_time[highest_priority] - burst_times[highest_priority];
+        is_completed[highest_priority] = true;
+        complete++;
+    }
+    gantt_chart.push_back(time);
+
+    // Display Gantt Chart
+    std::cout << "\nGantt Chart:\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n|";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << " P" << Temporary[gantt_process[i]][0] << "  |";
+    }
+    std::cout << "\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n";
+
+    // Align time values
+    std::cout << std::setw(3) << "0";
+    for (size_t i = 0; i < gantt_chart.size(); i++) {
+        std::cout << std::setw(7) << gantt_chart[i];
+    }
+    std::cout << "\n";
+
+    // Display table
+    std::cout << "\nProcess Table:\n";
+    std::cout << "Process | Arrival | Burst | Priority | Waiting | Turnaround | Completion\n";
+    std::cout << "-------------------------------------------------------------------\n";
+    float total_waiting = 0, total_turnaround = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        std::cout << Temporary[i][0] << "\t" << Temporary[i][2] << "\t" << burst_times[i] << "\t"
+            << Temporary[i][3] << "\t" << waiting_time[i] << "\t" << turnaround_time[i] << "\t" << completion_time[i] << "\n";
+        total_waiting += waiting_time[i];
+        total_turnaround += turnaround_time[i];
+    }
+
+    std::cout << "\nTotal Waiting Time: " << total_waiting;
+    std::cout << "\nAverage Waiting Time: " << total_waiting / n;
+    std::cout << "\nTotal Turnaround Time: " << total_turnaround;
+    std::cout << "\nAverage Turnaround Time: " << total_turnaround / n;
+
+    _getch();
+    std::system("cls");
+    reset();
+    MMenu['B']();
+}
+void around_robin() {
+    clone();
+
+    std::cout << "Original Process List:\n";
+    print(Process_List);
+
+    int time_quantum;
+    std::cout << "Enter Time Quantum: ";
+    std::cin >> time_quantum;
+
+    int n = Temporary.size();
+    vector<int> burst_times(n);
+    vector<int> remaining_time(n);
+    vector<int> waiting_time(n, 0);
+    vector<int> turnaround_time(n, 0);
+    vector<int> completion_time(n, 0);
+    vector<int> gantt_chart;
+    vector<int> gantt_process;
+
+    for (size_t i = 0; i < n; i++) {
+        burst_times[i] = stoi(Temporary[i][1]); // Burst time is at index 1
+        remaining_time[i] = burst_times[i];
+    }
+
+    int time = 0, complete = 0;
+    queue<int> process_queue;
+    vector<bool> in_queue(n, false);
+
+    for (size_t i = 0; i < n; i++) {
+        if (stof(Temporary[i][2]) == 0) {
+            process_queue.push(i);
+            in_queue[i] = true;
+        }
+    }
+
+    while (complete != n) {
+        if (process_queue.empty()) {
+            time++;
+            for (size_t i = 0; i < n; i++) {
+                if (!in_queue[i] && stof(Temporary[i][2]) <= time) {
+                    process_queue.push(i);
+                    in_queue[i] = true;
+                }
+            }
+            continue;
+        }
+
+        int current = process_queue.front();
+        process_queue.pop();
+
+        gantt_chart.push_back(time);
+        gantt_process.push_back(current);
+
+        int exec_time = std::min(time_quantum, remaining_time[current]);
+        time += exec_time;
+        remaining_time[current] -= exec_time;
+
+        for (size_t i = 0; i < n; i++) {
+            if (!in_queue[i] && stof(Temporary[i][2]) <= time) {
+                process_queue.push(i);
+                in_queue[i] = true;
+            }
+        }
+
+        if (remaining_time[current] > 0) {
+            process_queue.push(current);
+        }
+        else {
+            complete++;
+            completion_time[current] = time;
+            turnaround_time[current] = completion_time[current] - stoi(Temporary[current][2]);
+            waiting_time[current] = turnaround_time[current] - burst_times[current];
+        }
+    }
+    gantt_chart.push_back(time);
+
+    // Display Gantt Chart
+    std::cout << "\nGantt Chart:\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n|";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << " P" << Temporary[gantt_process[i]][0] << "  |";
+    }
+    std::cout << "\n ";
+    for (size_t i = 0; i < gantt_process.size(); i++) {
+        std::cout << "-------";
+    }
+    std::cout << "\n";
+
+    std::cout << std::setw(3) << "0";
+    for (size_t i = 0; i < gantt_chart.size(); i++) {
+        std::cout << std::setw(7) << gantt_chart[i];
+    }
+    std::cout << "\n";
+
+    // Display table
+    std::cout << "\nProcess Table:\n";
+    std::cout << "Process | Arrival | Burst | Waiting | Turnaround | Completion\n";
+    std::cout << "------------------------------------------------------------\n";
+    float total_waiting = 0, total_turnaround = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        std::cout << Temporary[i][0] << "\t" << Temporary[i][2] << "\t" << burst_times[i] << "\t"
+            << waiting_time[i] << "\t" << turnaround_time[i] << "\t" << completion_time[i] << "\n";
+        total_waiting += waiting_time[i];
+        total_turnaround += turnaround_time[i];
+    }
+
+    std::cout << "\nTotal Waiting Time: " << total_waiting;
+    std::cout << "\nAverage Waiting Time: " << total_waiting / n;
+    std::cout << "\nTotal Turnaround Time: " << total_turnaround;
+    std::cout << "\nAverage Turnaround Time: " << total_turnaround / n;
+
+    _getch();
+    std::system("cls");
+    reset();
+    MMenu['B']();
+}
+
+// Miscellaneous
+void unordered_maps() {
+    MMenu['A'] = process_menu;
+    MMenu['B'] = algorithm_menu;
+    MMenu['C'] = credits;
+    MMenu['X'] = terminate;
+    PMenu['A'] = pcreate;
+    PMenu['B'] = pedit;
+    PMenu['C'] = pdelete;
+    PMenu['D'] = pview;
+    PMenu['X'] = main_menu;
+    AMenu['A'] = afirst_come;
+    AMenu['B'] = ashort_job;
+    AMenu['C'] = ashort_time;
+    AMenu['D'] = apriority;
+    AMenu['E'] = around_robin;
+    AMenu['X'] = main_menu;
+}
+void name_check(string name) {
+    auto duplicate = find_if(Process_List.begin(), Process_List.end(), [&name](const vector<string>& process) {
+        return process[0] == name;
+        });
+
+    if (duplicate != Process_List.end()) {
+        std::cout << "Invalid Input! Please choose another name." << std::endl;
+        _getch();
+        system("cls");
+        PMenu['A']();
+    }
+}
+void check(string num) {
+    if (any_of(num.begin(), num.end(), [](char c) { return !::isdigit(c); })) {
+        std::cout << "Invalid Input! Please enter an integer" << std::endl;
+        _getch();
+        system("cls");
+        PMenu['A']();
+    }
+}
+void terminate() {
+    exit(0);
+}
+void print(const vector<vector<string>>& list) {
+    int count = 0, width = 15;
+
+    std::cout << left << setw(width - 1) << "Process Name" << "|"
+        << setw(width - 2) << "Burst Time" << " |"
+        << setw(width - 2) << "Arrival Time" << " |"
+        << setw(width - 2) << "Priority" << " |" << std::endl;
+
+    for (const auto& row : list) {
+        for (const auto& col : row) {
+            std::cout << left << setw(width - 2) << col.substr(0, width - 2) << " |";
+        }
+        std::cout << std::endl;
+        count++;
+    }
+}
+void no_values() {
+    if (Process_List.empty()) {
+        std::cout << "There are no processes. \nPlease create atleast one process." << std::endl;
+        _getch();
+        system("cls");
+        AMenu['X']();
+    }
+}
+void clone() {
+    Temporary = Process_List;
+}
+void reset() {
+    Temporary.clear();
+}
