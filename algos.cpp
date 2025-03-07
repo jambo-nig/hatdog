@@ -256,9 +256,11 @@ void firstComeFirstServe() {
     cloneProcesses();
     sort(temporaryList.begin(), temporaryList.end(), [](const vector<string>& a, const vector<string>& b) {
         return stoi(a[2]) < stoi(b[2]);
-        });
+    });
     cout << "\nExecuting FCFS Scheduling:\n";
     printProcesses(temporaryList);
+
+    _getch(); // Pause before clearing the screen
     resetTemporary();
 }
 
@@ -266,22 +268,26 @@ void shortestJobFirst() {
     cloneProcesses();
     sort(temporaryList.begin(), temporaryList.end(), [](const vector<string>& a, const vector<string>& b) {
         return stoi(a[1]) < stoi(b[1]);
-        });
+    });
     cout << "\nExecuting SJF Scheduling:\n";
     printProcesses(temporaryList);
+
+    _getch(); // Pause before clearing the screen
     resetTemporary();
 }
-
 void shortestRemainingTime() {
     cloneProcesses();
     priority_queue<pair<int, vector<string>>, vector<pair<int, vector<string>>>, greater<>> pq;
     for (auto& process : temporaryList)
         pq.push({ stoi(process[1]), process });
+
     cout << "\nExecuting SRTF Scheduling:\n";
     while (!pq.empty()) {
         auto process = pq.top(); pq.pop();
         cout << "Process: " << process.second[0] << " (Burst: " << process.first << ")\n";
     }
+
+    _getch(); // Pause before clearing the screen
     resetTemporary();
 }
 
@@ -289,9 +295,11 @@ void priorityScheduling() {
     cloneProcesses();
     sort(temporaryList.begin(), temporaryList.end(), [](const vector<string>& a, const vector<string>& b) {
         return stoi(a[3]) < stoi(b[3]);
-        });
+    });
     cout << "\nExecuting Priority Scheduling:\n";
     printProcesses(temporaryList);
+
+    _getch(); // Pause before clearing the screen
     resetTemporary();
 }
 
@@ -300,9 +308,11 @@ void roundRobin() {
     int timeQuantum;
     cout << "Enter Time Quantum: ";
     cin >> timeQuantum;
+
     queue<vector<string>> q;
     for (auto& process : temporaryList)
         q.push(process);
+
     cout << "\nExecuting Round Robin Scheduling:\n";
     while (!q.empty()) {
         auto process = q.front(); q.pop();
@@ -314,6 +324,8 @@ void roundRobin() {
         }
         cout << "Process: " << process[0] << " (Remaining Burst: " << burst << ")\n";
     }
+
+    _getch(); // Pause before clearing the screen
     resetTemporary();
 }
 
